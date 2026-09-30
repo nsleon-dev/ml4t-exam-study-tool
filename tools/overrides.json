@@ -1,0 +1,224 @@
+{
+  "#": "Hand fixes for formulas the PDF text layer garbles, each checked against the rendered PDF page. See apply_overrides() in parse_pool.py. _{x} = subscript, ^{x} = superscript (may nest).",
+  "_all": {
+    "#": "Single-letter variables glued to the next word by the PDF text layer (\"Kmust\" -> \"K must\").",
+    "regex": [
+      [
+        "\\b(?=(?:Kaffects|Kand|Kaverage|Kbecomes|Kcan|Kdetermines|Kgenerally|Kincreases|Kmay|Kmust|Knearest|Kobservations|Kproduce|Kranging|Kreduces|Kshould|Kthat|Ktraining|Kvotes|Nobservations|Nthe|Xis|Xor|pdoes|pfeatures|pincreases|pis|qof|λincreases|λis|λshould|λstrengthens|aand|bis|shas|xand|yis|roccupies|rapproaches)\\b)(\\w)",
+        "\\1 "
+      ]
+    ]
+  },
+  "ML-D4G3Q4": {
+    "regex": [
+      [
+        "X, X_\\{2\\}, … , ?X_\\{15\\}",
+        "X, X^{2}, …, X^{15}"
+      ]
+    ]
+  },
+  "ML-D4G3Q5": {
+    "regex": [
+      [
+        "X_\\{2\\}, X_\\{3\\}",
+        "X^{2}, X^{3}"
+      ],
+      [
+        "X_\\{4\\}",
+        "X^{4}"
+      ],
+      [
+        "residuals: ෍\\( _\\{n\\} _\\{i=1\\} (.*?)\\)\\^\\{2\\}",
+        "residuals: Σ_{i=1}^{n} (\\1)^{2}"
+      ]
+    ]
+  },
+  "ML-D4G4Q5": {
+    "regex": [
+      [
+        "residuals: ෍ ?e_\\{i\\} _\\{2\\} _\\{n\\} _\\{i=1\\}",
+        "residuals: Σ_{i=1}^{n} e_{i}^{2}."
+      ]
+    ]
+  },
+  "ML-D4G5Q4": {
+    "regex": [
+      [
+        "log ?\\( ?p\\(X\\) 1 ?− ?p\\(X\\)\\)",
+        "log(p(X) / (1 − p(X)))"
+      ],
+      [
+        "log ?\\( ?c 1 ?− ?c\\)",
+        "log(c / (1 − c))"
+      ]
+    ]
+  },
+  "ML-D4G5Q5": {
+    "regex": [
+      [
+        "∂ŷ ∂X_\\{2\\}",
+        "∂ŷ/∂X_{2}"
+      ]
+    ]
+  },
+  "ML-D4G6Q4": {
+    "regex": [
+      [
+        "problem is ⎩.*?⎫ ?\\.",
+        "problem is { Σ_{i=1}^{n} (y_{i} − β_{0} − Σ_{j=1}^{p} x_{ij}β_{j})^{2} + λP(β) }."
+      ],
+      [
+        "λ ?෍ ?∣ _\\{p\\} _\\{j=1\\} β_\\{j\\} ?∣",
+        "λ Σ_{j=1}^{p} |β_{j}|"
+      ],
+      [
+        "λ ?෍ ?β_\\{j\\} _\\{2\\} _\\{p\\} _\\{j=1\\} \\.",
+        "λ Σ_{j=1}^{p} β_{j}^{2}."
+      ]
+    ]
+  },
+  "ML-D5G1Q5": {
+    "regex": [
+      [
+        "ඥ\\(x_\\{1\\} − y_\\{1\\}\\)\\^\\{2\\} \\+ \\(x_\\{2\\} − y_\\{2\\}\\)\\^\\{2\\}",
+        "√[(x_{1} − y_{1})^{2} + (x_{2} − y_{2})^{2}]"
+      ],
+      [
+        "= ?∣ ?x_\\{1\\} − y_\\{1\\} ?∣ ?\\+ ?∣ ?x_\\{2\\} − y_\\{2\\} ?∣",
+        "= |x_{1} − y_{1}| + |x_{2} − y_{2}|"
+      ],
+      [
+        "z = x ?− ?μ σ \\.",
+        "z = (x − μ) / σ."
+      ]
+    ]
+  },
+  "ML-D5G1Q6": {
+    "regex": [
+      [
+        "ට\\(X_\\{1,a\\} − X_\\{1,b\\}\\) _\\{2\\} \\+ \\(X_\\{2,a\\} − X_\\{2,b\\}\\) _\\{2\\} \\+ \\(X_\\{3,a\\} − X_\\{3,b\\}\\) _\\{2\\}",
+        "√[(X_{1,a} − X_{1,b})^{2} + (X_{2,a} − X_{2,b})^{2} + (X_{3,a} − X_{3,b})^{2}]"
+      ],
+      [
+        "cos\\(a, b\\) = aTb ∥ ?a ?∥_\\{2\\} ?∥ ?b ?∥_\\{2\\} \\.",
+        "cos(a, b) = aᵀb / (‖a‖_{2} ‖b‖_{2})."
+      ],
+      [
+        "z_\\{ij\\} = x_\\{ij\\} − μ_\\{j\\} σ_\\{j\\} ,",
+        "z_{ij} = (x_{ij} − μ_{j}) / σ_{j},"
+      ],
+      [
+        "xnorm = x ?− ?x_\\{min\\} x_\\{max\\} − x_\\{min\\} \\.",
+        "x_{norm} = (x − x_{min}) / (x_{max} − x_{min})."
+      ]
+    ]
+  },
+  "ML-D5G2Q6": {
+    "regex": [
+      [
+        "= 1 ?K ?෍ ?y_\\{i\\} _\\{i\\} ?∈ ?\\S+(?: \\.)?",
+        "= (1/K) Σ_{i ∈ N_{K}(x_{0})} y_{i}."
+      ],
+      [
+        "= 1 ?N ?෍ ?y_\\{i\\} \\S+ _\\{i=1\\}",
+        "= (1/N) Σ_{i=1}^{N} y_{i}"
+      ]
+    ]
+  },
+  "ML-D5G4Q5": {
+    "regex": [
+      [
+        "fraction r_\\{p\\}",
+        "fraction r^{p}"
+      ],
+      [
+        "q_\\{1\\}/_\\{p\\}",
+        "q^{1/p}"
+      ],
+      [
+        "D_\\{max\\} − D_\\{min\\} D_\\{min\\} ?→ ?0",
+        "(D_{max} − D_{min}) / D_{min} → 0"
+      ],
+      [
+        "D_\\{min\\} D_\\{max\\} ?→ ?1",
+        "D_{min} / D_{max} → 1"
+      ],
+      [
+        "d_\\{2\\}\\(x, z\\) = ෍\\( _\\{p\\} _\\{j=1\\} (.*?)\\)\\^\\{2\\}",
+        "d^{2}(x, z) = Σ_{j=1}^{p} (\\1)^{2}"
+      ],
+      [
+        "d_\\{1\\}\\(x, z\\) = ෍ ?∣ _\\{p\\} _\\{j=1\\} (.*?) ?∣",
+        "d_{1}(x, z) = Σ_{j=1}^{p} |\\1|"
+      ]
+    ]
+  },
+  "ML-D5G5Q4": {
+    "regex": [
+      [
+        "ℝ_\\{p ?\\+ ?1\\}",
+        "ℝ^{p+1}"
+      ]
+    ]
+  },
+  "ML-D6G1Q5": {
+    "regex": [
+      [
+        "error: ෍ .*?\\(j,s\\) ?\\.",
+        "error: Σ_{i: x_{i} ∈ R_{1}(j,s)} (y_{i} − ȳ_{R_{1}})^{2} + Σ_{i: x_{i} ∈ R_{2}(j,s)} (y_{i} − ȳ_{R_{2}})^{2}."
+      ],
+      [
+        "f̂\\(x\\) = ȳ_\\{R\\}\\S* ?= 1 ∣ ?R_\\{m\\} ?∣ ෍ y_\\{i\\} _\\{i\\}:.*? \\.",
+        "f̂(x) = ȳ_{R_{m}} = (1/|R_{m}|) Σ_{i: x_{i} ∈ R_{m}} y_{i}."
+      ],
+      [
+        "ŷ ?new ∈ ?\\[y_\\{min\\},train, y_\\{max\\},train\\]",
+        "ŷ_{new} ∈ [y_{min,train}, y_{max,train}]"
+      ]
+    ]
+  },
+  "ML-D6G3Q5": {
+    "regex": [
+      [
+        "ȳ ?train",
+        "ȳ_{train}"
+      ],
+      [
+        "MSE ?train = 0\\.000 and R ?train",
+        "MSE_{train} = 0.000 and R^{2}_{train} = 1.000"
+      ],
+      [
+        "^_\\{2\\} = 1\\.000$",
+        ""
+      ],
+      [
+        "ȳ_\\{R\\}\\S",
+        "ȳ_{R_{m}}"
+      ]
+    ]
+  },
+  "ML-D6G4Q6": {
+    "regex": [
+      [
+        "2_\\{3\\} ?= ?8",
+        "2^{3} = 8"
+      ]
+    ]
+  },
+  "ML-D6G1Q6": {
+    "regex": [
+      [
+        "max _\\{k\\}",
+        "max_{k}"
+      ]
+    ]
+  },
+  "ML-D4G4Q6": {
+    "regex": [
+      [
+        "E\\[ε ?∣ ?X\\]",
+        "E[ε | X]"
+      ]
+    ]
+  }
+}

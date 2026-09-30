@@ -1,0 +1,3 @@
+# Generated question pool: stays on your machine, served only from Supabase to signed-in users.
+private/
+__pycache__/
