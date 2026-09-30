@@ -3,5 +3,5 @@
 // The anon key is safe to publish: row-level security limits each user to their own row.
 window.ML4T_CONFIG = {
   supabaseUrl: 'https://ymzujhuakjkussnrryfc.supabase.co',
-  supabaseAnonKey: '',  // Project Settings → API Keys → publishable key (sb_publishable_…) or legacy anon key
+  supabaseAnonKey: 'sb_publishable_2zg6_r7-qDm_7UFJKIz8NA_aEwUgZGI',  // Project Settings → API Keys → publishable key (sb_publishable_…) or legacy anon key
 };
